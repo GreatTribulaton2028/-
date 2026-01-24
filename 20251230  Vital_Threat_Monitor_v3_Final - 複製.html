@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<title>VITAL THREAT MONITOR // FINAL</title>
+<link href="https://fonts.googleapis.com/css2?family=Jura:wght@400;600;700&family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --c-bg: #030405;
+        --c-panel: rgba(12, 18, 24, 0.92);
+        --c-border: #1a2a3a;
+        --c-accent: #00f3ff;
+        --c-fatal: #ff2a2a;    /* Red for Death */
+        --c-crit: #ffae00;     /* Orange for Critical */
+        --c-acc: #00ff41;      /* Green for Accident */
+        --c-dim: #3a4a5a;
+        --f-mono: 'Share Tech Mono', monospace;
+        --f-head: 'Orbitron', sans-serif;
+        --f-text: 'Jura', 'Noto Sans TC', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        background: var(--c-bg);
+        color: #e0e6ed;
+        font-family: var(--f-text);
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        display: grid;
+        grid-template-rows: 60px 1fr;
+    }
+
+    /* --- HEADER --- */
+    header {
+        background: rgba(5,8,10,0.95);
+        border-bottom: 1px solid var(--c-accent);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+        z-index: 10;
+    }
+
+    .brand {
+        font-family: var(--f-head);
+        font-size: 24px;
+        letter-spacing: 2px;
+        color: var(--c-accent);
+        text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
+    }
+
+    .brand span { color: #fff; font-size: 14px; letter-spacing: 1px; margin-left: 10px; opacity: 0.7; }
+
+    .period-badge {
+        border: 1px solid var(--c-crit);
+        background: rgba(255, 174, 0, 0.05);
+        color: var(--c-crit);
+        padding: 6px 16px;
+        font-family: var(--f-mono);
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    /* --- LAYOUT --- */
+    main {
+        display: grid;
+        grid-template-columns: 320px 1fr 380px; /* 3-Column Layout */
+        gap: 4px;
+        padding: 4px;
+        height: 100%;
+    }
+
+    .panel {
+        background: var(--c-panel);
+        border: 1px solid var(--c-border);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .p-head {
+        background: rgba(0,0,0,0.3);
+        padding: 10px 16px;
+        border-bottom: 1px solid var(--c-border);
+        font-family: var(--f-mono);
+        font-size: 12px;
+        color: var(--c-accent);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* --- LEFT: LOG STREAM --- */
+    #log-stream {
+        overflow-y: scroll;
+        flex: 1;
+        padding: 0;
+    }
+
+    #log-stream::-webkit-scrollbar { width: 4px; background: #000; }
+    #log-stream::-webkit-scrollbar-thumb { background: var(--c-dim); }
+
+    .log-item {
+        padding: 10px 16px;
+        border-bottom: 1px solid #151f29;
+        font-size: 13px;
+        line-height: 1.4;
+        cursor: default;
+        transition: background 0.2s;
+        border-left: 3px solid transparent;
+    }
+    .log-item:hover { background: rgba(255,255,255,0.03); }
+    .log-item .date { color: #5a6a7a; font-family: var(--f-mono); font-size: 11px; display: block; margin-bottom: 3px; }
+    .log-item .title { color: #ccc; }
+
+    .type-FATAL { border-left-color: var(--c-fatal); }
+    .type-FATAL .title { color: #ffcece; }
+
+    .type-CRIT { border-left-color: var(--c-crit); }
+    .type-CRIT .title { color: #ffeec2; }
+
+    /* --- CENTER: VISUALS --- */
+    #center-panel {
+        display: grid;
+        grid-template-rows: 1fr 280px; /* Map/Radar Area vs Chart Area */
+    }
+
+    .radar-zone {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .big-stat {
+        text-align: center;
+        z-index: 2;
+        text-shadow: 0 0 20px #000;
+    }
+    .big-stat .val { font-family: var(--f-head); font-size: 72px; color: #fff; line-height: 1; }
+    .big-stat .label { font-family: var(--f-mono); color: var(--c-accent); font-size: 14px; letter-spacing: 3px; margin-top: 10px; }
+
+    /* Radar Animation */
+    .radar-circle {
+        position: absolute; width: 400px; height: 400px;
+        border: 1px solid rgba(0, 243, 255, 0.15);
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(0,243,255,0.05) 0%, transparent 60%);
+    }
+    .radar-sweep {
+        position: absolute; width: 400px; height: 400px;
+        background: conic-gradient(from 0deg, transparent 0deg, rgba(0, 243, 255, 0.1) 60deg, transparent 61deg);
+        border-radius: 50%;
+        animation: spin 6s infinite linear;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* Chart Zone */
+    .chart-container {
+        position: relative;
+        padding: 20px 20px 10px 40px; /* Left padding for axis */
+        border-top: 1px solid var(--c-border);
+        background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .chart-bars {
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+        gap: 2px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .bar {
+        flex: 1;
+        background: var(--c-dim);
+        opacity: 0.6;
+        transition: height 0.5s;
+        position: relative;
+        min-width: 4px;
+    }
+    .bar.spike { background: var(--c-fatal); box-shadow: 0 0 15px var(--c-fatal); opacity: 1; }
+    .bar:hover { background: #fff; opacity: 1; }
+
+    /* Cumulative Line (SVG Overlay) */
+    .chart-overlay {
+        position: absolute; top: 20px; left: 40px; right: 20px; bottom: 10px;
+        pointer-events: none;
+        z-index: 3;
+    }
+
+    polyline {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2;
+        vector-effect: non-scaling-stroke;
+        filter: drop-shadow(0 0 4px rgba(255,255,255,0.5));
+    }
+
+    /* Axis */
+    .y-axis {
+        position: absolute; left: 0; top: 20px; bottom: 10px; width: 35px;
+        display: flex; flex-direction: column; justify-content: space-between;
+        font-family: var(--f-mono); font-size: 10px; color: #666; text-align: right; padding-right: 5px;
+    }
+    .x-axis {
+        position: absolute; bottom: -20px; left: 40px; right: 20px;
+        display: flex; justify-content: space-between;
+        font-family: var(--f-mono); font-size: 10px; color: #666;
+    }
+
+    /* --- RIGHT: STATS --- */
+    .stat-row {
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .stat-row:last-child { border: none; }
+
+    .stat-cat { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .cat-name { font-size: 15px; font-weight: 600; color: #ddd; }
+    .cat-name span { font-size: 12px; color: #777; margin-left: 5px; font-weight: 400; }
+    .cat-val { font-family: var(--f-mono); font-size: 20px; color: #fff; }
+
+    .progress-track { background: #1a1a1a; height: 6px; width: 100%; border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; transition: width 1s ease-out; }
+
+    .fill-fatal { background: var(--c-fatal); box-shadow: 0 0 8px var(--c-fatal); }
+    .fill-crit { background: var(--c-crit); }
+    .fill-acc { background: var(--c-acc); }
+    .fill-other { background: var(--c-dim); }
+
+    .desc { font-size: 12px; color: #667; margin-top: 6px; line-height: 1.3; }
+
+    .footer-note {
+        margin-top: auto;
+        padding: 20px;
+        font-size: 11px;
+        color: #444;
+        font-family: var(--f-mono);
+        text-align: center;
+        border-top: 1px solid #111;
+    }
+
+</style>
+</head>
+<body>
+
+<header>
+    <div class="brand">THREAT MONITOR <span>v3.1 LIVE</span></div>
+    <div class="period-badge" id="period-display">SYNCING...</div>
+</header>
+
+<main>
+    <!-- LEFT: LOG -->
+    <div class="panel">
+        <div class="p-head">
+            <span>INCOMING FEED</span>
+            <span>事件流</span>
+        </div>
+        <div id="log-stream">
+            <!-- JS Populates -->
+        </div>
+    </div>
+
+    <!-- CENTER: MAIN -->
+    <div class="panel" id="center-panel">
+        <div class="radar-zone">
+            <div class="radar-circle"></div>
+            <div class="radar-sweep"></div>
+            <div class="big-stat">
+                <div class="val" id="total-count">000</div>
+                <div class="label">TOTAL INCIDENTS / 總個案數</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div style="position:absolute; top:5px; left:45px; font-size:10px; color:#666; font-family:var(--f-mono);">
+                DAILY FREQUENCY & CUMULATIVE TREND (每日頻率與累積趨勢)
+            </div>
+
+            <div class="y-axis">
+                <span>100%</span><span>50%</span><span>0</span>
+            </div>
+
+            <svg class="chart-overlay">
+                <polyline id="trend-line" points=""></polyline>
+            </svg>
+
+            <div class="chart-bars" id="bar-container">
+                <!-- JS Populates -->
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: STATS -->
+    <div class="panel">
+        <div class="p-head">
+            <span>CLASSIFICATION</span>
+            <span>分類統計</span>
+        </div>
+
+        <div id="stats-container">
+            <!-- JS Populates -->
+        </div>
+
+        <div class="footer-note">
+            SYSTEM STATUS: MONITORING<br>
+            DATA SOURCE: PUBLIC NEWS RECORDS<br>
+            "The line never falls. It only climbs."
+        </div>
+    </div>
+</main>
+
+<!-- DATA INPUT SECTION -->
+<script>
+// =================================================================
+// USER DATA AREA - PASTE YOUR TEXT INSIDE THE BACKTICKS BELOW
+// 這裡貼上您的資料 (格式: 日期 [TAB] 網址 [TAB] 標題)
+// =================================================================
+const RAW_DATA = `
+
+`; 
+// =================================================================
+</script>
+
+<script>
+    // --- 1. PARSER LOGIC ---
+    function parseData(text) {
+        const lines = text.trim().split('\n');
+        const events = [];
+
+        lines.forEach(line => {
+            if(!line.trim()) return;
+            const parts = line.split('\t');
+            // Allow for variations in column order or count, but assume Date is first or last? 
+            // Based on file: Date first.
+            let dateStr = parts[0].trim();
+            let title = parts.length > 2 ? parts[2].trim() : (parts[1] || "Unknown");
+            let url = parts.length > 1 ? parts[1].trim() : "#";
+
+            // Normalize Date (Assume DD/MM/YYYY or YYYY-MM-DD)
+            // Simple cleaner:
+            dateStr = dateStr.replace(/\//g, '-');
+
+            events.push({ date: dateStr, title: title, url: url, category: categorize(title) });
+        });
+
+        // Sort by Date
+        events.sort((a,b) => new Date(a.date.split('-').reverse().join('-')) - new Date(b.date.split('-').reverse().join('-')));
+        return events;
+    }
+
+    function categorize(t) {
+        t = t.toLowerCase();
+        if (t.includes('猝死') || t.includes('死亡') || t.includes('不治') || t.includes('屍') || t.includes('斃') || t.includes('死')) return 'FATAL';
+        if (t.includes('暈倒') || t.includes('昏迷') || t.includes('危殆') || t.includes('不適') || t.includes('心跳停')) return 'CRIT';
+        if (t.includes('意外') || t.includes('車禍') || t.includes('撞') || t.includes('火警') || t.includes('跌')) return 'ACC';
+        return 'OTHER';
+    }
+
+    // --- 2. RENDER LOGIC ---
+    const events = parseData(RAW_DATA);
+
+    // A. Header Period
+    if(events.length > 0) {
+        const start = events[0].date;
+        const end = events[events.length-1].date;
+        document.getElementById('period-display').innerText = `PERIOD: ${start} TO ${end}`;
+    }
+
+    // B. Log Stream (Reverse Order)
+    const stream = document.getElementById('log-stream');
+    [...events].reverse().forEach(evt => {
+        const div = document.createElement('div');
+        div.className = `log-item type-${evt.category}`;
+        div.innerHTML = `<span class="date">${evt.date}</span><span class="title">${evt.title}</span>`;
+        stream.appendChild(div);
+    });
+
+    // C. Center Stats
+    document.getElementById('total-count').innerText = events.length;
+
+    // D. Right Stats
+    const stats = {
+        'FATAL': { label: '猝死 / FATAL', desc: 'Sudden collapse resulting in death (猝死/不治)', count: 0, class: 'fill-fatal' },
+        'CRIT':  { label: '危殆 / CRITICAL', desc: 'Unconscious/Collapse/Critical condition (暈倒/昏迷)', count: 0, class: 'fill-crit' },
+        'ACC':   { label: '意外 / ACCIDENT', desc: 'Trauma/Traffic/Industrial accidents (意外/受傷)', count: 0, class: 'fill-acc' },
+        'OTHER': { label: '其他 / OTHER', desc: 'Unspecified or minor incidents (其他)', count: 0, class: 'fill-other' }
+    };
+
+    events.forEach(e => { if(stats[e.category]) stats[e.category].count++; else stats['OTHER'].count++; });
+
+    const statsContainer = document.getElementById('stats-container');
+    const total = events.length;
+
+    // Order: FATAL -> CRIT -> ACC -> OTHER
+    ['FATAL', 'CRIT', 'ACC', 'OTHER'].forEach(key => {
+        const s = stats[key];
+        const pct = ((s.count / total) * 100).toFixed(1);
+
+        const html = `
+        <div class="stat-row">
+            <div class="stat-cat">
+                <div class="cat-name">${s.label.split(' / ')[0]} <span>${s.label.split(' / ')[1]}</span></div>
+                <div class="cat-val">${s.count}</div>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill ${s.class}" style="width: ${pct}%"></div>
+            </div>
+            <div class="desc">${s.desc} (${pct}%)</div>
+        </div>`;
+        statsContainer.innerHTML += html;
+    });
+
+    // E. Chart (Daily + Cumulative)
+    const dateMap = {};
+    events.forEach(e => { dateMap[e.date] = (dateMap[e.date] || 0) + 1; });
+
+    // Fill gaps? Maybe just use existing dates for simplicity in V3
+    const dates = Object.keys(dateMap).sort((a,b) => new Date(a.split('-').reverse().join('-')) - new Date(b.split('-').reverse().join('-')));
+    const dailyCounts = dates.map(d => dateMap[d]);
+    const maxDaily = Math.max(...dailyCounts);
+
+    // Cumulative
+    let runningTotal = 0;
+    const cumulCounts = dailyCounts.map(c => { runningTotal += c; return runningTotal; });
+    const maxCumul = runningTotal;
+
+    const barContainer = document.getElementById('bar-container');
+    const polyline = document.getElementById('trend-line');
+    let points = "";
+
+    dailyCounts.forEach((count, i) => {
+        // Bar
+        const barH = (count / maxDaily) * 80; // Bar takes up to 80% of height locally? No, visually separate.
+        // Let's make bars scaled to MaxDaily, but visual height is maybe 60% of container.
+        // Actually, let's just make them fit.
+        const bar = document.createElement('div');
+        bar.className = 'bar' + (count > (maxDaily * 0.7) ? ' spike' : '');
+        bar.style.height = (count / maxDaily * 100) + '%';
+        bar.title = `${dates[i]}: ${count} incidents`;
+        barContainer.appendChild(bar);
+
+        // Line Point
+        // x: percent of width, y: percent of height (inverted)
+        const x = (i / (dates.length - 1)) * 100; // percent
+        const y = 100 - ((cumulCounts[i] / maxCumul) * 100); // percent from top
+
+        // Convert to SVG coordinate space roughly. 
+        // SVG viewbox isn't set, so we use percentages in points? No, points need absolute units usually or viewBox.
+        // Let's set viewBox on SVG dynamically or just use relative coordinates if supported? 
+        // Better: Use a simple <div style> for points? No, SVG is cleaner.
+        // Let's normalize points to 0-100 range and use viewBox="0 0 100 100" preserveAspectRatio="none"
+    });
+
+    // Fix SVG Line
+    const svg = document.querySelector('.chart-overlay');
+    svg.setAttribute('viewBox', `0 0 ${dailyCounts.length * 10} 100`);
+    svg.setAttribute('preserveAspectRatio', 'none');
+
+    dailyCounts.forEach((c, i) => {
+        const x = i * 10 + 5; // center of bar slice
+        const y = 100 - ((cumulCounts[i] / maxCumul) * 100);
+        points += `${x},${y} `;
+    });
+    polyline.setAttribute('points', points);
+
+</script>
+</body>
+</html>
