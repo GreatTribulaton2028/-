@@ -6,6 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>PROJECT: TRIBULATION // CLASSIFIED</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;family=Orbitron:wght@400;700;900&amp;family=Noto+Serif+TC:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+
 <style>
         :root {
             --bg: #030305;
@@ -19,11 +20,9 @@
             --font-header: 'Orbitron', sans-serif;
             --font-body: 'Noto Serif TC', serif;
         }
-
         /* ------------------ 色碼 ------------------ */
 .color-list { list-style: none; padding-left: 0; margin: 0; }
 .color-list li { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
-
 .color-list li::before{
   content: "";
   width: 14px; height: 14px;
@@ -32,9 +31,6 @@
   box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
   flex: 0 0 14px;
 }
-
-
-
         /* ------------------ 基礎與氛圍 ------------------ */
         body {
             background-color: var(--bg);
@@ -46,7 +42,6 @@
             background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
             background-size: 100% 2px, 3px 100%;
         }
-
         /* ------------------ 故障文字特效 (Glitch Text) ------------------ */
         @keyframes glitch {
             0% { text-shadow: 2px 0 var(--neon-red), -2px 0 var(--neon-blue); }
@@ -54,12 +49,10 @@
             5% { text-shadow: -2px 0 var(--neon-red), 2px 0 var(--neon-blue); }
             100% { text-shadow: none; }
         }
-
         .glitch-text {
             animation: glitch 3s infinite alternate-reverse;
             position: relative;
         }
-
         /* ------------------ Hero 封面 ------------------ */
         .hero {
             height: 100vh;
@@ -71,7 +64,6 @@
             border-bottom: 2px solid var(--neon-red);
             overflow: hidden;
         }
-
         .hero h1 {
             font-family: var(--font-header);
             font-size: clamp(3rem, 8vw, 7rem);
@@ -82,7 +74,6 @@
             text-shadow: 0 0 20px rgba(255,255,255,0.5);
             z-index: 2;
         }
-
         .hero .warning {
             font-family: var(--font-tech);
             color: var(--neon-red);
@@ -94,9 +85,7 @@
             letter-spacing: 2px;
             animation: blink 2s infinite;
         }
-
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
         /* ------------------ 時間軸結構 ------------------ */
         .timeline-wrapper {
             position: relative;
@@ -104,68 +93,61 @@
             margin: 0 auto;
             padding: 100px 20px;
         }
-
         /* 核心光束：會變色的中軸線 */
         .axis-line {
             position: absolute;
-            left: 20px; /* 手機版靠左 */
+            left: 50%; /* 永遠居中，取代原來 left:20px */
+            transform: translateX(-50%);
             top: 0; bottom: 0;
             width: 4px;
-            /* 漸變：從上方的藍色(科技/冷) 漸變到下方的紅色(血/戰爭) */
-            background: linear-gradient(to bottom, 
-                var(--neon-blue) 0%, 
-                var(--neon-blue) 25%, 
-                var(--neon-gold) 50%, 
-                var(--neon-red) 75%, 
+            background: linear-gradient(to bottom,
+                var(--neon-blue) 0%,
+                var(--neon-blue) 25%,
+                var(--neon-gold) 50%,
+                var(--neon-red) 75%,
                 #500000 100%);
             box-shadow: 0 0 15px var(--neon-blue);
             z-index: 1;
         }
-        
-        @media (min-width: 900px) {
-            .axis-line { left: 50%; transform: translateX(-50%); }
-        }
-
+       
         /* ------------------ 事件卡片 (Cyber-Cards) ------------------ */
         .event-node {
             position: relative;
             margin-bottom: 150px;
             width: 100%;
         }
-
         /* 背景大年份 - 視覺衝擊 */
         .bg-year {
             position: absolute;
             top: -60px;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%); /* 手機桌面都居中 */
             font-family: var(--font-header);
-            font-size: 10rem;
+            font-size: clamp(4rem, 15vw, 10rem);
             font-weight: 900;
             color: rgba(255,255,255,0.03);
             z-index: 0;
             pointer-events: none;
             line-height: 1;
         }
-
         /* 內容容器 */
         .content-box {
             position: relative;
             background: var(--card-bg);
             border-left: 4px solid var(--neon-blue); /* 預設藍色 */
             padding: 0;
-            margin-left: 50px; /* 避開中軸線 */
+            margin-left: 35px; /* 避開中軸線 */
             z-index: 2;
             transition: all 0.3s ease;
             /* 玻璃切割感 */
             clip-path: polygon(
-                0 0, 
-                100% 0, 
-                100% calc(100% - 20px), 
-                calc(100% - 20px) 100%, 
+                0 0,
+                100% 0,
+                100% calc(100% - 20px),
+                calc(100% - 20px) 100%,
                 0 100%
             );
         }
-
         .content-box::before {
             content: '';
             position: absolute;
@@ -174,7 +156,6 @@
             pointer-events: none;
             z-index: 3;
         }
-
         /* 圖片區域 - 證據風格 */
         .evidence-img {
             width: 100%;
@@ -182,7 +163,6 @@
             overflow: hidden;
             position: relative;
         }
-
         .evidence-img img {
             width: 100%;
             height: 100%;
@@ -190,7 +170,6 @@
             filter: grayscale(100%) contrast(1.2); /* 預設死寂黑白 */
             transition: 0.2s; /* 快速切換，像電子訊號 */
         }
-
         /* 掃描線覆蓋層 */
         .scan-line {
             position: absolute;
@@ -205,23 +184,20 @@
             pointer-events: none;
             z-index: 2;
         }
-
         /* 懸停效果 - 真相揭露 */
         .content-box:hover .evidence-img img {
             filter: grayscale(0%) contrast(1.1) hue-rotate(-10deg);
             transform: scale(1.02);
         }
-        
+       
         .content-box:hover {
             box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
             transform: translateX(10px);
         }
-
         /* 文字資訊 */
         .info-panel {
             padding: 25px 30px;
         }
-
         .meta-data {
             font-family: var(--font-tech);
             color: var(--neon-blue);
@@ -230,7 +206,6 @@
             display: flex;
             justify-content: space-between;
         }
-
         h3 {
             font-family: var(--font-body);
             font-size: 1.8rem;
@@ -238,25 +213,22 @@
             margin: 0 0 15px 0;
             line-height: 1.3;
         }
-
         p { color: #aaa; font-size: 1.1rem; margin-bottom: 20px; }
-
         /* 摺疊數據 - 終端機風格 */
         details {
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1);
             padding: 10px;
         }
-        
+       
         summary {
             color: var(--text-dim);
             font-family: var(--font-tech);
             cursor: pointer;
             outline: none;
         }
-        
+       
         summary:hover { color: var(--neon-blue); }
-
         .raw-data {
             margin-top: 10px;
             font-family: var(--font-tech);
@@ -264,15 +236,14 @@
             color: var(--neon-blue);
             line-height: 1.6;
         }
-
         /* ------------------ 桌面佈局調整 ------------------ */
-        @media (min-width: 900px) {
+        @media (min-width: 601px) {
             .event-node {
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
+                align-items: flex-start;
             }
-            
+           
             /* 奇數在左 */
             .event-node:nth-child(odd) .content-box {
                 margin-left: 0;
@@ -283,49 +254,67 @@
                 text-align: right;
             }
             .event-node:nth-child(odd) { flex-direction: row-reverse; }
-            .event-node:nth-child(odd) .bg-year { left: auto; right: 0; }
+            .event-node:nth-child(odd) .bg-year { left: auto; right: 50%; transform: translateX(50%); }
             .event-node:nth-child(odd) .content-box { clip-path: polygon(0 0, 100% 0, 100% 100%, 20px 100%, 0 calc(100% - 20px)); }
-
             /* 偶數在右 */
             .event-node:nth-child(even) .content-box {
                 margin-left: 50px;
                 width: 45%;
             }
+            .event-node:nth-child(even) .bg-year { left: 50%; transform: translateX(-50%); }
         }
-
+        /* 手機版佈局修正：垂直單欄，卡片偏右，節點居中 */
+        @media (max-width: 600px) {
+            .event-node {
+                display: block; /* 取消 flex，避免擠壓重疊 */
+            }
+           
+            .content-box {
+                margin-left: 50px; /* 留空間畀中軸線 + 節點 */
+                margin-right: 10px;
+                width: auto;
+                max-width: calc(100% - 70px);
+                clip-path: polygon(
+                    0 0,
+                    100% 0,
+                    100% calc(100% - 20px),
+                    calc(100% - 20px) 100%,
+                    0 100%
+                ); /* 手機統一右斜，不鏡像 */
+            }
+           
+            .bg-year {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
         /* ------------------ 階段變色邏輯 (CSS Classes) ------------------ */
-        
+       
         /* 戰爭階段 (紅色) */
         .phase-war .content-box { border-color: var(--neon-red) !important; }
         .phase-war .meta-data { color: var(--neon-red); }
         .phase-war .raw-data { color: #ff8888; }
         .phase-war:hover .content-box { box-shadow: 0 0 30px rgba(255, 0, 60, 0.2); }
-        
+       
         /* 審判階段 (金色/黑色) */
         .phase-final .content-box { border-color: var(--neon-gold) !important; background: #111; }
         .phase-final .meta-data { color: var(--neon-gold); }
         .phase-final .evidence-img img { filter: sepia(100%) contrast(1.2) grayscale(0.5); }
-
         /* ------------------ 節點連接器 ------------------ */
         .node-point {
             position: absolute;
-            left: 20px; top: 140px; /* 手機定位 */
+            left: 50%;
+            top: 140px;
+            transform: translateX(-50%) rotate(45deg); /* 手機桌面都居中 */
             width: 16px; height: 16px;
             background: #000;
             border: 2px solid var(--neon-blue);
-            transform: rotate(45deg); /* 菱形 */
             z-index: 5;
             box-shadow: 0 0 10px var(--neon-blue);
         }
-
-        @media (min-width: 900px) {
-            .node-point { left: 50%; transform: translateX(-50%) rotate(45deg); }
-        }
-
         .phase-war .node-point { border-color: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
         .phase-final .node-point { border-color: var(--neon-gold); background: var(--neon-gold); }
-
-    
+   
         /* NEW LOG STYLES INJECTED */
         .system-log {
             margin-top: 15px;
@@ -343,7 +332,6 @@
         }
         .system-log summary:hover { text-shadow: 0 0 5px var(--neon-gold); }
         .system-log summary::-webkit-details-marker { display: none; }
-
         .log-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -353,7 +341,6 @@
             padding: 10px;
             border-left: 2px solid var(--neon-dim);
         }
-
         .log-row {
             display: block;
             font-family: var(--font-tech);
@@ -379,9 +366,9 @@
 
 <p style="@import url('https://fonts.googleapis.com/css2?family=Liu+Jian+Mao+Cao&display=swap');
           font-family: 'Liu Jian Mao Cao', cursive, 'Ma Shan Zheng', 'Zhi Mang Xing', system-ui, serif;
-          letter-spacing: 12px;               /* ← 從 25px 降下來，緊湊更有氣勢 */
+          letter-spacing: 3px !important;               /* ← 從 25px 降下來，緊湊更有氣勢 */
           color: #630000;                     /* ← 換這個試試，更深更壓迫 */
-          font-size: 5.2em;
+          font-size: 2.5em !important; 
           font-weight: normal;
           text-shadow:
             3px 4px 10px #1A0000,             /* 加大偏移，強調筆壓 */
@@ -389,7 +376,7 @@
           -webkit-text-stroke: 0.6px #1A0000; /* 即使不是主因，也建議薄一點 */
           paint-order: stroke fill;
           text-align: center;">
-七‧災‧年
+七災年
 </p>
 <p style="@import url('https://fonts.googleapis.com/css2?family=Liu+Jian+Mao+Cao&display=swap'); 
           font-family: 'Liu Jian Mao Cao', cursive, 'Zhi Mang Xing', 'Ma Shan Zheng', system-ui, serif; 
@@ -421,8 +408,8 @@
 ...
 
 <details>
-<summary>大災難的顏色（點擊展開）</summary>
-<ul class="color-list" style="color:#777; font-size:0.9em;"> 
+<summary>大災難的顏色（點擊展開）(手機版)</summary>
+<ul class="color-list" style="color:#EEF1FF; font-size:1.0em;"> 
 白‧紅‧黑(淺藍)‧灰(淺黃／綠／斑點)
 <li style="--swatch:#EEF1FF">#EEF1FF → 假白馬・偽冠冕・冷白・弓弦。投毒工具。（征服人身/靈魂外衣／偽和平光）</li> 
 <li style="--swatch:#3C0000">#3C0000 → 紅馬・深舊血（人為／戰火擴散／火與血／奪和平／相殺／口角之爭／開端）</li>
@@ -508,8 +495,12 @@
 <span class="tag">450 DAYS</span>
 </div>
 <h3>第一印：大規模爆發</h3>
-<p>全球疫情爆發，疫苗緊急法，救今生，喪永恆。</p>
+<p>全球疫情爆發</p>
+<p>疫苗緊急法，救今生，喪永恆。</p>
 <p>預備「不能買賣」前置演習。</p>
+<p>路加福音 17:33 </p>
+<p>凡想要保全生命的，必喪掉生命；</p>
+<p>凡喪掉生命的，必救活生命。</p>
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
@@ -539,8 +530,15 @@
 <span class="date">2022-02-24</span>
 <span class="tag">405 DAYS</span>
 </div>
-<h3>紅馬：戰爭爆發</h3>
-<p>俄烏全面戰爭。國攻打國，奪去太平。全球供應鏈斷裂的開始。</p>
+<h3>第二印：紅馬：戰爭爆發</h3>
+<p>俄烏全面戰爭。</p>
+<p>國攻打國，奪去太平。</p>
+<p>全球供應鏈斷裂的開始。</p>
+<p>糧產國的戰爭</p>
+<p>↓</p>
+<p>？？瘟疫 > 人為戰爭？</p>
+<p>↓</p>
+<p>人為瘟疫 > 人為戰爭？</p>
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
@@ -569,7 +567,7 @@
 <span class="date">2023-04-05</span>
 <span class="tag">270 DAYS</span>
 </div>
-<h3>黑馬：經濟衰退</h3>
+<h3>第三印：黑馬：經濟衰退</h3>
 <p>全球經濟危機</p>
 <p>2022年，加息，QE > QT</p>
 <p>2023年，全球滯帳Stagflation</p>
@@ -610,7 +608,7 @@
 <span class="date">2023-12-31</span>
 <span class="tag">135 DAYS</span>
 </div>
-<h3>灰馬：喻表：死亡</h3>
+<h3>第四印：灰馬：喻表：死亡</h3>
 <p>能登半島。大地震</p>
 <p>能登半島。Noto Peninsula</p>
 <p>Noto peninsula in Hebrew Gematria equals 705</p>
@@ -620,8 +618,8 @@
 <span class="log-row"><span class="log-label">&gt; VERSE:</span>啟示錄 6:8 灰馬名為「死」</span>
 <span class="log-row"><span class="log-label">&gt; TOLL:</span>權柄殺害地上四分之一</span>
 <span class="log-row"><span class="log-label">&gt; CODE:</span>可以用刀劍、饑荒、瘟疫（或譯：死亡）、野獸，殺害地上四分之一的人</span>
-<span class="log-row"><span class="log-label">&gt; CODE:</span>有時間值和不同事件</span>
-<span class="log-row"><span class="log-label">&gt; CODE:</span>在未來持續地進行</span>
+<span class="log-row"><span class="log-label">&gt; CODE:</span>有時間值</span>
+<span class="log-row"><span class="log-label">&gt; CODE:</span>持續地進行</span>
 
 <span class="log-row"><span class="log-label">&gt; CODE:</span>Noto peninsula in Hebrew Gematria equals 705</span>
 <span class="log-row"><span class="log-label">&gt; CODE:</span>希伯來文的能登半島數字等於 705</span>
@@ -653,10 +651,41 @@
 </div>
 <h3>獻祭止息</h3>
 <p>2000年來首次合格紅母牛，卻因衝突致使潔淨儀式中斷。</p>
+<p>但以理書 11:31</p>
+<p>他必興兵，這兵必褻瀆聖地，就是保障，除掉常獻的燔祭，設立那行毀壞可憎的。</p>
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
-<span class="log-row"><span class="log-label">&gt; VERSE:</span>但以理 12:11 除掉常獻燔祭，必有1290日</span><span class="log-row"><span class="log-label">&gt; EVENT:</span>逾越節應獻卻未獻</span>
+<span class="log-row">
+<span class="log-label">&gt; VERSE:</span>但以理 12:11 除掉常獻燔祭，必有1290日</span>
+<span class="log-row">
+<!-- 第一部分：事件與成因 -->
+<span class="log-row"><span class="log-label">&gt; EVENT:</span>逾越節：應獻卻未獻的祭</span>
+<span class="log-row"><span class="log-label">&gt; DATE:</span>2023年10月7日：哈馬斯發動「阿克薩洪水」戰爭</span>
+<span class="log-row"><span class="log-label">&gt; ROOT-CAUSE:</span>原因正是因為：紅母牛送抵以色列</span>
+<span class="log-row"><span class="log-label">&gt; RESULT:</span>導致 2024年4月22日，祭祀和供獻止息</span>
+
+<!-- 第二部分：字義分析 -->
+<span class="log-row"><span class="log-label">&gt; WORD:</span>止息 (原文：שָׁבַת)</span>
+<span class="log-row"><span class="log-label">&gt; TRANS:</span>英文 to cease → to keep or observe the sabbath</span>
+<span class="log-row"><span class="log-label">&gt; ETYMOLOGY:</span>`Shabath` (安息) 意即「為了休息而停手」</span>
+<span class="log-row"><span class="log-label">&gt; NOTE:</span>如同安息日，性質為「暫時中止」而非「永久終結」</span>
+
+<!-- 第三部分：邏輯驗證 -->
+<span class="log-row"><span class="log-label">&gt; LOGIC:</span>若未來任何時間進行了獻祭，即證明上一次僅是「止息」</span>
+<span class="log-row"><span class="log-label">&gt; PROOF:</span>2025年4月15日：以色列安排了 500 人進行逾越節獻祭</span>
+<span class="log-row"><span class="log-label">&gt; CONCLUSION:</span>此舉證實：2024年4月22日那次確為「止息」(Shabath)</span>
+
+<!-- 第四部分：時間戳記與總結 -->
+<span class="log-row"><span class="log-label">&gt; TIMESTAMP:</span>[2026-01-26 00:07]</span>
+<span class="log-row"><span class="log-label">&gt; EVENT:</span>2025年7月：以色列亦已焚燒了紅母牛</span>
+<span class="log-row"><span class="log-label">&gt; SEQUENCE:</span>1. 哈馬斯稱攻擊原因：紅母牛</span>
+<span class="log-row"><span class="log-label">&gt; SEQUENCE:</span>2. 以色列因攻擊暫停獻祭 (止息)</span>
+<span class="log-row"><span class="log-label">&gt; SEQUENCE:</span>3. 以色列隨後恢復並進行獻祭</span>
+<span class="log-row"><span class="log-label">&gt; MATCH:</span>完全符合聖經次序</span>
+<span class="log-row"><span class="log-label">&gt; QUERY:</span>為何不信，或不去查查呢？</span>
+
+</span>
 </div>
 </details>
 </div>
@@ -675,12 +704,30 @@
 <span class="date">2024-05-14</span>
 <span class="tag">DAY 1260</span>
 </div>
-<h3>一七之半：靈性背棄</h3>
-<p>以色列獨立日。前三年半結束。國家選擇了可薩教巴力，而非耶和華。</p>
+<h3>第1260日。一七之半：靈性背棄</h3>
+<p>以色列獨立日。</p>
+<p>國家選擇了可薩教巴力，而非耶和華。</p>
+<p>前三年半結束。</p>
+<p>一七之半的數字 = 四印馬的數字 = 1345</p>
+<p>瘟疫 > 戰爭 > 經濟衰退 > 開始持續死亡漸增</p>
+<p>由新冠一年後，到2024年5月14日，剛好1260日</p>
+<p>經歷了，獻祭被止息</p>
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
 <span class="log-row"><span class="log-label">&gt; CODE:</span>獨立日數字 668</span><span class="log-row"><span class="log-label">&gt; MIRROR:</span>靈性背棄鏡像：後來全家得救</span><span class="log-row"><span class="log-label">&gt; STATUS:</span>後三年半開始，兩見證人預備</span>
+<!-- 第一部分：經文應驗與觀察 -->
+<span class="log-row"><span class="log-label">&gt; VERSE:</span>一七之半，他必使祭祀與供獻止息 (但以理書 9:27)</span>
+<span class="log-row"><span class="log-label">&gt; FULFILL:</span>回應觀察點：2024年4月22日 (逾越節)</span>
+<span class="log-row"><span class="log-label">&gt; EVENT:</span>以色列真的因哈馬斯攻擊，導致獻祭儀式止息 (被迫取消/延後)</span>
+
+<!-- 第二部分：新聞與資料來源 -->
+<span class="log-row"><span class="log-label">&gt; SOURCE:</span><a href="https://www.flyingeaglepublications.com/blog/israel-s-red-heifer-update-april-2024/israel-s-red-heifer-update-april-2024" target="_blank">以色列紅母牛更新：2024年4月 (Israel's Red Heifer Update) [Flying Eagle Publications]</a></span>
+
+<span class="log-row"><span class="log-label">&gt; SOURCE:</span><a href="https://mycharisma.com/news/red-heifer-ceremony-now-canceled-rabbi-gives-update/" target="_blank">紅母牛儀式取消？拉比更新 (Red Heifer Ceremony Now Canceled? Rabbi Gives Update) [Charisma News]</a></span>
+
+<span class="log-row"><span class="log-label">&gt; SOURCE:</span><a href="https://www.reddit.com/r/DonaldTrump666/comments/1j54qrf/the_red_heifer/" target="_blank">討論區話題：The Red Heifer 紅母牛 [Reddit]</a></span>
+
 </div>
 </details>
 </div>
@@ -699,12 +746,37 @@
 <span class="date">2024-06-13</span>
 <span class="tag">DAY 1290</span>
 </div>
-<h3>死亡收割節</h3>
-<p>七七節翌日。假五旬節啟動。先是死亡收割，後是生命收藏。</p>
+<h3>第1290日。死亡的收割節</h3>
+<p>七七節翌日。假五旬節啟動</p>
+<p>先是死亡收割，後是生命收藏。</p>
+<p>「以賽亞書 61:2」</p>
+<p>被拆分為兩半的神學對應（初臨 vs 再臨）</p>
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
 <span class="log-row"><span class="log-label">&gt; MIRROR:</span>一七之半落在收割節</span><span class="log-row"><span class="log-label">&gt; PROPHECY:</span>兩個見證人已正式出現傳道</span>
+
+
+<!-- 第一部分：預言的分界 -->
+<span class="log-row"><span class="log-label">&gt; FOCUS:</span>『七七節』：一七之半的關鍵分界線</span>
+
+<!-- 第二部分：第一次降臨（恩典） -->
+<span class="log-row"><span class="log-label">&gt; ADVENT-I:</span>基督第一次來：僅宣讀以賽亞書「上半句」</span>
+<span class="log-row"><span class="log-label">&gt; VERSE:</span>【路 4:19】「報告　神悅納人的禧年。」</span>
+<span class="log-row"><span class="log-label">&gt; STATUS:</span>(恩典時代開啟)</span>
+
+<!-- 第三部分：第二次降臨（審判） -->
+<span class="log-row"><span class="log-label">&gt; ADVENT-II:</span>基督第二次來：補全以賽亞書「下半句」</span>
+<span class="log-row"><span class="log-label">&gt; VERSE:</span>【賽 61:2】「...和我們　神報仇的日子；安慰一切悲哀的人。」</span>
+<span class="log-row"><span class="log-label">&gt; STATUS:</span> (報仇的日子)</span>
+
+<!-- 第四部分：時間線觀察 -->
+<span class="log-row"><span class="log-label">&gt; OBSERVE:</span>歷年災難頻仍，當謹慎「數算日子」</span>
+<span class="log-row"><span class="log-label">&gt; MARKER:</span>若時間軸停在「七七節」，可能便是現在了</span>
+
+<!-- 第五部分：驗證與展望 -->
+<span class="log-row"><span class="log-label">&gt; QUERY:</span>2026年，會否迎來巨變？</span>
+
 </div>
 </details>
 </div>
@@ -716,7 +788,8 @@
 <div class="content-box">
 <div class="evidence-img">
 <div class="scan-line"></div>
-<img alt="Evidence" src=""/>
+<img alt="Evidence" src="https://upload.cc/i1/2026/01/26/tpEMbI.png
+"/>
 </div>
 <div class="info-panel">
 <div class="meta-data">
@@ -728,7 +801,7 @@
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
-<span class="log-row"><span class="log-label">&gt; EVENT:</span>Rwanda首針</span><span class="log-row"><span class="log-label">&gt; CODE:</span>Mpox = 440 (敵基督眾數)</span><span class="log-row"><span class="log-label">&gt; MEANING:</span>Jynneos = 食屍者</span>
+<span class="log-row"><span class="log-label">&gt; EVENT:</span>Rwanda。MPOX首針</span><span class="log-row"><span class="log-label">&gt; CODE:</span>Mpox = 440 (敵基督的眾數)</span><span class="log-row"><span class="log-label">&gt; MEANING:</span>Jynneos = 食屍者 = 陰府的隱意</span>
 </div>
 </details>
 </div>
@@ -752,7 +825,33 @@
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
-<span class="log-row"><span class="log-label">&gt; VERSE:</span>啟示錄 6:12 大地震，日黑月紅</span><span class="log-row"><span class="log-label">&gt; SIGN:</span>未熟無花果被風搖落</span><span class="log-row"><span class="log-label">&gt; PROPHECY:</span>完成以賽亞書上半句「悅納人的禧年」</span>
+<span class="log-row"><span class="log-label">&gt; VERSE:</span>啟示錄 6:12 大地震，日頭變黑如蒙毛布，滿月變紅</span>
+<!-- 第一部分：新聞事件紀錄 -->
+<span class="log-row"><span class="log-label">&gt; EVENT:</span>2025年1月7日 (上午)：西藏日喀則發生 7.1 級大地震</span>
+<span class="log-row"><span class="log-label">&gt; EVENT:</span>2025年1月7日 (黃昏)：美國南加州爆發「帕利塞茲」等多處毀滅性大火</span>
+<span class="log-row"><span class="log-label">&gt; LINK:</span>東方地震 (地動) → 西方大火 (煙燻日黑)</span>
+
+<!-- 第二部分：經文對應 (第六印) -->
+<span class="log-row"><span class="log-label">&gt; VERSE:</span>【啟示錄 6:12】揭開第六印的時候...</span>
+<span class="log-row"><span class="log-label">&gt; MATCH:</span>「地大震動」 (西藏 M7.1 地震)</span>
+<span class="log-row"><span class="log-label">&gt; MATCH:</span>「日頭變黑像毛布」 (加州大火濃煙遮蔽日光)</span>
+
+<!-- 第三部分：經文對應 (馬可福音) -->
+<span class="log-row"><span class="log-label">&gt; VERSE:</span>【馬可福音 13:8】...多處必有地震、饑荒。這都是災難的起頭。</span>
+<span class="log-row"><span class="log-label">&gt; SEQ:</span>災難起頭 (生產之難) → 接續大災難</span>
+<span class="log-row"><span class="log-label">&gt; LOGIC:</span>同一天內，地球兩端接連應驗「地動」與「火災」</span>
+
+<!-- 第四部分：總結 -->
+<span class="log-row"><span class="log-label">&gt; OBSERVE:</span>從東方(上午)到西方(黃昏)，災難隨日頭軌跡而行</span>
+<span class="log-row"><span class="log-label">&gt; QUERY:</span>這是否標誌著「產難」頻率已進入最後加速階段？</span>
+<span class="log-row"><span class="log-label">&gt; SIGN:</span>當一切都預備好了的時候，未熟無花果將被風搖落</span>
+
+<span class="log-row"><span class="log-label">&gt; EVENT:</span>1. 日頭變黑：加州大火（如 Palisades Fire）產生極濃煙霧，新聞報導常形容「白晝如夜」 </span>
+<a href="https://www.hk01.com/%E5%8D%B3%E6%99%82%E5%9C%8B%E9%9A%9B/1091835/%E6%B4%9B%E6%9D%89%E7%A3%AF%E9%AB%98%E7%B4%9A%E7%A4%BE%E5%8D%80%E5%B1%B1%E7%81%AB%E5%A4%B1%E6%8E%A7-%E7%95%B6%E5%9C%B0%E5%AE%A3%E5%B8%83%E7%B7%8A%E6%80%A5%E7%8B%80%E6%85%8B-%E9%80%BE3%E8%90%AC%E4%BA%BA%E9%A0%88%E6%92%A4%E9%9B%A2" target="_blank">[hk01]</a>
+<span class="log-row"><span class="log-label">&gt; EVENT:</span>2. 地大震動：西藏 7.1 級地震屬於淺層強震，符合「地大震動」的描述。 </span>
+<a href="https://www.hko.gov.hk/tc/%E5%A4%A9%E6%96%87%E5%8F%B0%E7%B6%B2%E8%AA%8C/109115/2025%E5%B9%B41%E6%9C%887%E6%97%A5%E8%A5%BF%E8%97%8F71%E7%B4%9A%E5%A4%A7%E5%9C%B0%E9%9C%87" target="_blank">[hko.gov]</a>
+
+
 </div>
 </details>
 </div>
@@ -764,19 +863,59 @@
 <div class="content-box">
 <div class="evidence-img">
 <div class="scan-line"></div>
-<img alt="Evidence" src=""/>
+<img alt="Evidence" src="https://upload.cc/i1/2026/01/26/PERaZ4.png"/>
 </div>
 <div class="info-panel">
 <div class="meta-data">
 <span class="date">2025-04-30</span>
 <span class="tag">SILENCE</span>
 </div>
-<h3>寂靜二刻：90日寬限</h3>
+<h3>第七印：天上寂靜二刻：90日寬限</h3>
 <p>以色列陣亡將士紀念日。短暫的寧靜。</p>
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
-<span class="log-row"><span class="log-label">&gt; MIRROR:</span>關稅鏡像 Red Heifer</span><span class="log-row"><span class="log-label">&gt; TIME:</span>約90日的寬限期</span>
+<span class="log-row"><span class="log-row"><span class="log-label">&gt; TIME:</span>約90日的寬限期</span>
+<!-- 第一部分：數值與對稱鏡像 -->
+<span class="log-row"><span class="log-label">&gt; SYMBOL:</span>紅母牛 (Red Heifer) 喻表基督</span>
+<span class="log-row"><span class="log-label">&gt; GEMATRIA:</span>關稅 (Tariff) 的數字值 ＝ 紅母牛</span>
+<span class="log-row"><span class="log-label">&gt; DECODE:</span>對等 (Reciprocity) ＝ 關稅；刻意用「對等」二字的，只有仇敵</span>
+<span class="log-row"><span class="log-label">&gt; GEMATRIA:</span>委內瑞拉 (Venezuela) 數字 ＝ 666 : 111</span>
+<span class="log-row"><span class="log-label">&gt; GEMATRIA:</span>騎劫油船 數字 ＝ 666 : 111</span>
+<span class="log-row"><span class="log-label">&gt; GEMATRIA:</span>格陵蘭 (Greenland) 數字 ＝ 關稅 ＝ 紅母牛</span>
+
+<!-- 第二部分：鏡像次序 -->
+<span class="log-row"><span class="log-label">&gt; SEQUENCE:</span>1. 天上寂靜二刻 ＝ 90日</span>
+<span class="log-row"><span class="log-label">&gt; SEQUENCE:</span>2. 關稅：紅母牛 ＝ 兩次延後 90日</span>
+<span class="log-row"><span class="log-label">&gt; SEQUENCE:</span>3. 委內瑞拉 ＝ 666 : 111</span>
+<span class="log-row"><span class="log-label">&gt; SEQUENCE:</span>4. 騎劫油船 ＝ 666 : 111</span>
+<span class="log-row"><span class="log-label">&gt; SEQUENCE:</span>5. 格陵蘭 ＝ 關稅 ＝ 紅母牛數字</span>
+
+<!-- 第三部分：名諱與地點的啟示 -->
+<span class="log-row"><span class="log-label">&gt; NAME:</span>基督第一次來是 Yeshu (欠缺)</span>
+<span class="log-row"><span class="log-label">&gt; NAME:</span>基督第二次來是 Yeshua (完整)</span>
+<span class="log-row"><span class="log-label">&gt; LINK:</span>重建加沙 (Gaza)，因為 Gaza 代表 "a" (補全名字)</span>
+
+<!-- 第四部分：七年大災難時間軸 -->
+<span class="log-row"><span class="log-label">&gt; TIME-KEY:</span>一七之半：時間分界線</span>
+<span class="log-row"><span class="log-label">&gt; CALC:</span>四印的數字 ＝ 一七之半</span>
+<span class="log-row"><span class="log-label">&gt; FORMULA:</span>七印七號 減去 七碗</span>
+<span class="log-row"><span class="log-label">&gt; CALC:</span>五至七印 ＝ 3；一至七號 ＝ 7；餘下十災</span>
+<span class="log-row"><span class="log-label">&gt; HEBREW:</span>馬 (Horse) 數字 ＝ 126</span>
+<span class="log-row"><span class="log-label">&gt; TOTAL:</span>十災 ＝ 1260</span>
+<span class="log-row"><span class="log-label">&gt; TOTAL:</span>推算七碗是 30 ＝ 1290 (對應：那行毀壞可憎必有1290日)</span>
+
+<!-- 第五部分：日期推算與預警 -->
+<span class="log-row"><span class="log-label">&gt; TIMING:</span>十災的一半 (以 126日計算)</span>
+<span class="log-row"><span class="log-label">&gt; DATE:</span>二號日期 (或三號發生二號之災)：2026/02/03 或 06</span>
+<span class="log-row"><span class="log-label">&gt; DATE:</span>三號日期：2026/06/09</span>
+<span class="log-row"><span class="log-label">&gt; STATUS:</span>不確定，也不遠 (持續向前)</span>
+
+<!-- 第六部分：末後獸印 -->
+<span class="log-row"><span class="log-label">&gt; SIGN:</span>當看到美國介紹外星人出來</span>
+<span class="log-row"><span class="log-label">&gt; REVEAL:</span>便知那惡者的外殼 (別的受造之物) 已來了</span>
+<span class="log-row"><span class="log-label">&gt; EVENT:</span>可能將由大淫婦進行施洗</span>
+<span class="log-row"><span class="log-label">&gt; WARNING:</span>這樣，獸印便不遠了</span>
 </div>
 </details>
 </div>
@@ -800,7 +939,23 @@
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
-<span class="log-row"><span class="log-label">&gt; VERSE:</span>馬可福音 13:8 國攻打國</span><span class="log-row"><span class="log-label">&gt; SEQUENCE:</span>刀劍 → 饑荒 → 新瘟疫</span><span class="log-row"><span class="log-label">&gt; SYSTEM:</span>數字貨幣獸印系統轉為「強制」</span>
+<!-- 第一部分：經文與系統進程 -->
+<span class="log-row"><span class="log-label">&gt; VERSE:</span>馬可福音 13:8 國攻打國</span>
+<span class="log-row"><span class="log-label">&gt; SEQUENCE:</span>刀劍 → 饑荒 → 新瘟疫</span>
+
+<!-- 第二部分：關鍵時間節點 -->
+<span class="log-row"><span class="log-label">&gt; DATE:</span>2020/12/01 [起點] 新冠爆發一年後</span>
+<span class="log-row"><span class="log-label">&gt; DATE:</span>2024/06/13 [1290日] 七七節翌日</span>
+<span class="log-row"><span class="log-label">&gt; DATE:</span>2025/06/13 [一載] 以色列-伊朗戰爭</span>
+<span class="log-row"><span class="log-label">&gt; DATE:</span>2027/06/13 [二載] 收割節翌日</span>
+<span class="log-row"><span class="log-label">&gt; DATE:</span>2027/12/13 [半載] 聖民權力被打破</span>
+<span class="log-row"><span class="log-label">&gt; DATE:</span>2028/01/09 [1335日] 終局或轉折</span>
+
+<!-- 第三部分：觀察與總結 -->
+<span class="log-row"><span class="log-label">&gt; OBSERVE:</span>教會鮮少關注「耶和華的節期」及查考原文含義</span>
+<span class="log-row"><span class="log-label">&gt; JUBILEE:</span>2027年：基督受洗後第 40 個禧年</span>
+<span class="log-row"><span class="log-label">&gt; CONCLUSION:</span>時間點的巧合性極高，均指向同一終局</span>
+
 </div>
 </details>
 </div>
@@ -824,7 +979,18 @@
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
-<span class="log-row"><span class="log-label">&gt; PROPHECY:</span>第三聖殿預期</span><span class="log-row"><span class="log-label">&gt; TECH:</span>獸印元件三：腦機介面人體試驗成熟</span>
+<span class="log-row"><span class="log-label">&gt; PROPHECY:</span>第三聖殿預期</span><span class="log-row">
+<span class="log-row"><span class="log-label">&gt; EVENT:</span><a href="https://cdn-news.org/News.aspx?EntityID=News&PK=00000000a478f727dccc842b05aca847aa771a1fef2ca041" target="_blank">以色列預演紅母牛儀式，迎第三聖殿序曲 [今日報]</a></span>
+<span class="log-row"><span class="log-label">&gt; DATE:</span>2025年7月15日 (儀式於 7/1 舉行)</span>
+<span class="log-row"><span class="log-label">&gt; LOCATION:</span>以色列北部撒瑪利亞 (非橄欖山，僅為預演)</span>
+<span class="log-row"><span class="log-label">&gt; RESULT:</span>「不合格」：選用之牛與地點未達《民數記》標準，純屬練習</span>
+
+<span class="log-row"><span class="log-label">&gt; PREP:</span>真正合格的 5 頭紅母牛 (德州運抵) 仍安置於古希洛中心</span>
+<span class="log-row"><span class="log-label">&gt; TENSION:</span>哈瑪斯曾稱：紅母牛運入以色列是以哈戰爭導火索之一</span>
+<span class="log-row"><span class="log-label">&gt; NEXT:</span>聖殿研究所強調：未來正式儀式將於橄欖山舉行，直視聖殿山</span>
+
+<span class="log-label">&gt; TECH:</span>獸印元件三：瘟疫中的藥物 + 貼片 + 人工晶片</span>
+
 </div>
 </details>
 </div>
@@ -836,61 +1002,20 @@
 <div class="content-box">
 <div class="evidence-img">
 <div class="scan-line"></div>
-<img alt="Evidence" src=""/>
+<img alt="Evidence" src="https://upload.cc/i1/2026/01/26/cLuBjh.png
+"/>
 </div>
 <div class="info-panel">
 <div class="meta-data">
 <span class="date">2025-10-01</span>
 <span class="tag">ECOLOGY</span>
 </div>
-<h3>冰雹與火：生態損毀</h3>
-<p>贖罪日前夕。生態三分之一損毀。</p>
-<details class="system-log">
-<summary>ACCESS SYSTEM DATA [ + ]</summary>
-<div class="log-grid">
-<span class="log-row"><span class="log-label">&gt; VERSE:</span>第一號：冰雹與火摻著血</span><span class="log-row"><span class="log-label">&gt; DAMAGE:</span>三分之一的樹木被燒</span>
-</div>
-</details>
-</div>
-</div>
-</div>
-<div class="event-node">
-<div class="bg-year">2025</div>
-<div class="node-point"></div>
-<div class="content-box">
-<div class="evidence-img">
-<div class="scan-line"></div>
-<img alt="Evidence" src=""/>
-</div>
-<div class="info-panel">
-<div class="meta-data">
-<span class="date">2025-12-30</span>
-<span class="tag">TEVET</span>
-</div>
-<h3>Asarah B'Tevet</h3>
-<p>圍攻開始。詛咒變祝福，哀悼開端轉祝福。</p>
-</div>
-</div>
-</div>
-<div class="event-node">
-<div class="bg-year">2026</div>
-<div class="node-point"></div>
-<div class="content-box">
-<div class="evidence-img">
-<div class="scan-line"></div>
-<img alt="Evidence" src="https://i2-prod.mirror.co.uk/incoming/article36424640.ece/ALTERNATES/s1200b/2_Image.jpg"/>
-</div>
-<div class="info-panel">
-<div class="meta-data">
-<span class="date">2026-02-03</span>
-<span class="tag">2ND TRUMPET</span>
-</div>
 <h3>第二號：海變血</h3>
 <p>火燒大山扔入海中。生態浩劫。義與惡徹底分離。</p>
 <details class="system-log">
 <summary>ACCESS SYSTEM DATA [ + ]</summary>
 <div class="log-grid">
-<span class="log-row"><span class="log-label">&gt; VERSE:</span>啟示錄 8:8-9</span><span class="log-row"><span class="log-label">&gt; TOLL:</span>海中生物死1/3，船隻毀1/3</span><span class="log-row"><span class="log-label">&gt; POWER:</span>兩個見證人能力升級：火從口出</span>
+<span class="log-row"><span class="log-label">&gt; VERSE:</span>啟示錄 8:8-9</span><span class="log-row"><span class="log-label">&gt; TOLL:</span>海中生物死1/3，船隻毀1/3</span><span class="log-row"><span class="log-label">&gt; POWER:</span>按照上述日期，2026-2028年，將迎來急劇變化</span>
 </div>
 </details>
 </div>
@@ -922,18 +1047,25 @@
 </div>
 </div>
 <footer style="text-align: center; padding: 50px; border-top: 1px solid #333; color: #555; font-family: var(--font-tech);">
-<p>DO NOT CONFORM TO THIS WORLD // END OF FILE</p>
+<p>DO NOT CONFORM TO THIS WORLD / 不要隨波逐流 / END OF FILE</p>
 <p style="font-size: 0.8em; color: var(--neon-red);">LAST UPDATE: 2026-01-22</p>
             時間軸持續更新 • 最後更新：2026-01-22<br>
             純粹紀錄事件與預測階段 • 滾動觀察變化 • 由你自行判斷 • 願主憐憫
 </footer>
         <div style="padding: 20px; background: #111; margin: 20px; border: 1px solid #00f3ff; border-radius: 8px;">
-  <h2 style="color: #00f3ff; text-align: center;">可用頁面 / Available Pages</h2>
+  <h2 style="color: #00f3ff; text-align: center;">漸增的死亡統計 Death Harvesting</h2>
   <ul style="list-style: none; padding: 0; font-size: 18px; line-height: 2;">
     <li><a href="Vital_Threat_Monitor_2025-10-01 to 2025-10-31.html" style="color: #00ff41; text-decoration: none;">2025年10月監測報告</a></li>
     <li><a href="Vital_Threat_Monitor_2025-11-01 to 2025-11-30.html" style="color: #00ff41; text-decoration: none;">2025年11月監測報告</a></li>
     <li><a href="Vital_Threat_Monitor_2025-12-01 to 2025-12-31.html" style="color: #00ff41; text-decoration: none;">2025年12月監測報告</a></li>
-    <li><a href="Vital_Threat_Monitor_2026-01-03 to 2026-01-24.html" style="color: #00ff41; text-decoration: none;">2026年1月監測報告（最新）</a></li>
+    <li><a href="Vital_Threat_Monitor_2026-01-03 to 2026-01-24.html" style="color: #00ff41; text-decoration: none;">2026年1月監測報告（更新中）</a></li>
+<li style="margin-top: 15px; border-top: 1px dashed #333; padding-top: 15px;">
+  <span style="color: #ffff00;">&gt; WARNING:</span>
+  <a href="https://flossy-dish-cfd.notion.site/c0a3d8981bb64a48a4220cc9f567cece" target="_blank" style="color: #00ff41; text-decoration: none;">
+    💰 經濟預警 (2026-2028?) [Notion]
+  </a>
+</li>
+
     <!-- 未來新增月份就繼續加一行 -->
   </ul>
 </div>
