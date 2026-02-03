@@ -1,0 +1,187 @@
+/* 響應式設計優化 */
+
+/* 手機版 (< 640px) */
+@media (max-width: 639px) {
+  /* 標題縮小 */
+  h1 {
+    font-size: 1.5rem !important;
+  }
+
+  /* 卡片邊距調整 */
+  .cyber-card {
+    padding: 0.75rem !important;
+  }
+
+  /* 雷達圖容器 */
+  .radar-container {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* 表格字體縮小 */
+  table, .table-like {
+    font-size: 0.75rem !important;
+  }
+
+  /* 單欄布局 */
+  .layout-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* 按鈕寬度 */
+  button {
+    width: 100% !important;
+  }
+
+  /* 頁腳文字 */
+  footer {
+    font-size: 0.65rem !important;
+  }
+}
+
+/* 平板版 (640px - 1024px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  /* 2欄布局 */
+  .layout-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* 標題適中 */
+  h1 {
+    font-size: 2rem !important;
+  }
+
+  /* 卡片間距 */
+  .cyber-card {
+    padding: 1rem !important;
+  }
+
+  /* 雷達圖 */
+  .radar-container {
+    height: 300px !important;
+  }
+}
+
+/* 桌面版 (> 1024px) */
+@media (min-width: 1024px) {
+  /* 3欄布局 */
+  .layout-grid {
+    grid-template-columns: 1fr 2fr 1fr !important;
+  }
+
+  /* 標題正常 */
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  /* 卡片間距 */
+  .cyber-card {
+    padding: 1.5rem !important;
+  }
+
+  /* 雷達圖 */
+  .radar-container {
+    height: 400px !important;
+  }
+}
+
+/* 超大屏幕 (> 1440px) */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1400px !important;
+  }
+
+  h1 {
+    font-size: 3rem !important;
+  }
+}
+
+/* 觸屏設備優化 */
+@media (hover: none) and (pointer: coarse) {
+  /* 增大可點擊區域 */
+  button, a {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+
+  /* 移除懸停效果，改用活動狀態 */
+  .cyber-card:hover {
+    transform: none !important;
+  }
+
+  .cyber-card:active {
+    transform: scale(0.98) !important;
+  }
+}
+
+/* 深色模式 */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #030305 !important;
+    color: #eeeeee !important;
+  }
+}
+
+/* 高對比度模式 */
+@media (prefers-contrast: more) {
+  .cyber-card {
+    border-width: 2px !important;
+  }
+
+  .neon-glow {
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.8) !important;
+  }
+}
+
+/* 減少動畫模式 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .radar-sweep {
+    animation: none !important;
+  }
+
+  .glitch-text {
+    animation: none !important;
+  }
+}
+
+/* 橫屏模式 */
+@media (orientation: landscape) and (max-height: 600px) {
+  header {
+    padding: 0.5rem 1rem !important;
+  }
+
+  h1 {
+    font-size: 1.5rem !important;
+  }
+
+  .radar-container {
+    height: 250px !important;
+  }
+}
+
+/* 打印樣式 */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .cyber-card {
+    border: 1px solid black !important;
+    background: white !important;
+  }
+
+  .neon-glow {
+    box-shadow: none !important;
+  }
+
+  header, footer {
+    display: block !important;
+  }
+}

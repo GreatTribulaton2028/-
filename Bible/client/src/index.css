@@ -1,0 +1,247 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./styles/responsive.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  /* 末世科技色彩系統 */
+  --neon-cyan: #00f3ff;
+  --neon-red: #ff003c;
+  --neon-gold: #f5d300;
+  --deep-black: #030305;
+  --text-light: #eeeeee;
+  --text-dim: #555566;
+  
+  --primary: var(--neon-cyan);
+  --primary-foreground: var(--deep-black);
+  --sidebar-primary: var(--neon-cyan);
+  --sidebar-primary-foreground: var(--deep-black);
+  --chart-1: var(--neon-cyan);
+  --chart-2: var(--neon-red);
+  --chart-3: var(--neon-gold);
+  --chart-4: #00ff41;
+  --chart-5: #ff8800;
+  --radius: 0.65rem;
+  --background: #030305;
+  --foreground: #eeeeee;
+  --card: rgba(10, 10, 12, 0.85);
+  --card-foreground: #eeeeee;
+  --popover: rgba(10, 10, 12, 0.95);
+  --popover-foreground: #eeeeee;
+  --secondary: #1a2a3a;
+  --secondary-foreground: #eeeeee;
+  --muted: #3a4a5a;
+  --muted-foreground: #aaaaaa;
+  --accent: var(--neon-cyan);
+  --accent-foreground: var(--deep-black);
+  --destructive: var(--neon-red);
+  --destructive-foreground: #fff;
+  --border: rgba(0, 243, 255, 0.1);
+  --input: rgba(0, 243, 255, 0.05);
+  --ring: var(--neon-cyan);
+  --sidebar: rgba(10, 10, 12, 0.85);
+  --sidebar-foreground: #eeeeee;
+  --sidebar-accent: var(--neon-cyan);
+  --sidebar-accent-foreground: var(--deep-black);
+  --sidebar-border: rgba(0, 243, 255, 0.1);
+  --sidebar-ring: var(--neon-cyan);
+}
+
+/* 掃描線背景效果 */
+@keyframes scanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+@keyframes glitch {
+  0% { text-shadow: 2px 0 var(--neon-red), -2px 0 var(--neon-cyan); }
+  2% { text-shadow: 2px 0 var(--neon-red), -2px 0 var(--neon-cyan); }
+  5% { text-shadow: -2px 0 var(--neon-red), 2px 0 var(--neon-cyan); }
+  100% { text-shadow: none; }
+}
+
+@keyframes radar-spin {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes neon-pulse {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 1; }
+}
+
+@keyframes danger-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Noto Serif TC', serif;
+  margin: 0;
+  overflow-x: hidden;
+  background-image: 
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 2px, 3px 100%;
+}
+
+/* 故障文字效果 */
+.glitch-text {
+  animation: glitch 3s infinite alternate-reverse;
+  position: relative;
+}
+
+/* 霓虹發光效果 */
+.neon-glow {
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.4), 
+              0 0 20px rgba(0, 243, 255, 0.2);
+}
+
+.neon-glow-red {
+  box-shadow: 0 0 10px rgba(255, 0, 60, 0.4),
+              0 0 20px rgba(255, 0, 60, 0.2);
+}
+
+.neon-glow-gold {
+  box-shadow: 0 0 10px rgba(245, 211, 0, 0.4),
+              0 0 20px rgba(245, 211, 0, 0.2);
+}
+
+/* 雷達掃描效果 */
+.radar-sweep {
+  animation: radar-spin 8s infinite linear;
+}
+
+/* 脈衝效果 */
+.pulse-neon {
+  animation: neon-pulse 2s infinite;
+}
+
+/* 危險閃爍 */
+.danger-flash {
+  animation: danger-blink 1s infinite;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+
+  /* 末世科技卡片 */
+  .cyber-card {
+    @apply bg-card border border-border rounded-lg p-4 transition-all duration-300;
+    background: rgba(10, 10, 12, 0.85);
+    border: 1px solid rgba(0, 243, 255, 0.2);
+  }
+
+  .cyber-card:hover {
+    @apply border-accent;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* 標題樣式 */
+  .title-glitch {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .title-tech {
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 2px;
+  }
+
+  /* 技術文字 */
+  .tech-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--neon-cyan);
+  }
+}
